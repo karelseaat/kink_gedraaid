@@ -1,48 +1,65 @@
 # KINK FM Recently Played Songs
 
-This project provides two shell scripts to fetch and display the most recently played songs from the KINK FM radio station website ([kink.nl/gedraaid/kink](https://kink.nl/gedraaid/kink)) directly in your terminal.
+This project provides a shell script to fetch and display the most recently played songs from the KINK FM radio station website ([kink.nl/gedraaid/kink](https://kink.nl/gedraaid/kink)) directly in your terminal.
 
-## Scripts
+## Script: `kink-songs-bash.sh`
 
-There are two versions of the script, each using a different approach:
+This script is a pure `bash` implementation, relying only on `curl` and standard Unix text processing utilities like `grep`, `sed`, `printf`, and `wc`.
 
-### `kink-songs.sh` (Bash with Embedded Python)
+### Features
+- Fetches the KINK FM "gedraaid" page using `curl`.
+- Extracts and formats song titles and artists.
+- Displays the last 25 songs (customizable) with colorful output.
+- **Continuous Mode:** Can run in a loop to keep the list updated.
+- **Customizable Output:** Options to disable colors, headers, footers, or enable quiet mode.
 
-This script uses `bash` to execute an embedded `python3` script. The Python script handles:
-- Fetching the KINK FM "gedraaid" (played) page.
-- Parsing the HTML to extract the JSON data containing the `playedTracks`.
-- Unescaping and formatting the song titles and artists.
-- Displaying the last 25 songs with colorful output.
-
-**Dependencies:**
+### Dependencies
 - `bash` (standard on most Unix-like systems)
-- `python3` (with standard libraries `json`, `re`, `urllib.request`)
-
-**How to Run:**
-```bash
-./kink-songs.sh
-```
-
-### `kink-songs-bash.sh` (Pure Bash with cURL and Standard Tools)
-
-This script is a pure `bash` implementation, relying only on `curl` and standard Unix text processing utilities like `grep`, `sed`, `printf`, and `wc`. It performs:
-- Fetching the KINK FM "gedraaid" page using `curl`.
-- Extracting and unescaping track data directly from the HTML using `sed` and `grep`.
-- Formatting and displaying the last 25 songs with colorful output.
-
-**Dependencies:**
-- `bash` (standard)
 - `curl` (usually pre-installed or easily installable)
 - Standard Unix utilities (`grep`, `sed`, `printf`, `wc`)
 
-**How to Run:**
+### Usage
+
+```bash
+./kink-songs-bash.sh [OPTIONS]
+```
+
+### Options
+
+| Option | Description |
+| :--- | :--- |
+| `-n, --number NUM` | Number of songs to display (default: 25) |
+| `-c, --no-colors` | Disable colored output |
+| `--no-header` | Disable header display |
+| `--no-footer` | Disable footer display |
+| `-q, --quiet` | Minimal output (header/footer/colors disabled) |
+| `--continuous` | Enable continuous mode with periodic refresh |
+| `--interval SEC` | Refresh interval in seconds (default: 30, requires --continuous) |
+| `-h, --help` | Show help message |
+
+### Examples
+
+**Display default (25) songs with colors:**
 ```bash
 ./kink-songs-bash.sh
 ```
 
-## Example Output
+**Display top 10 songs:**
+```bash
+./kink-songs-bash.sh -n 10
+```
 
-Both scripts produce similar colorful output, like this (colors may vary slightly depending on your terminal):
+**Run continuously, refreshing every 60 seconds:**
+```bash
+./kink-songs-bash.sh --continuous --interval 60
+```
+
+**Minimal output (just the list):**
+```bash
+./kink-songs-bash.sh --quiet
+```
+
+## Example Output
 
 ```
 ╔════════════════════════════════════════╗
@@ -57,7 +74,7 @@ Found 25 recently played songs:
  2. Another Artist
     'Another Song'
 
- ... (up to 25 songs) ...
+ ...
 
 ╔════════════════════════════════════════╗
 ║ Data source: KINK FM                   ║
