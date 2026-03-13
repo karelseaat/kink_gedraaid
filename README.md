@@ -1,65 +1,58 @@
-# KINK FM Recently Played Songs
+# KINK FM Recently Played Songs  
 
-This project provides a shell script to fetch and display the most recently played songs from the KINK FM radio station website ([kink.nl/gedraaid/kink](https://kink.nl/gedraaid/kink)) directly in your terminal.
+I built this because I wanted to check what’s spinning on KINK FM without opening a browser. It’s a simple shell script—no dependencies beyond what you already have on a standard Unix-like system.  
 
-## Script: `kink-songs-bash.sh`
+## Script: `kink-songs-bash.sh`  
 
-This script is a pure `bash` implementation, relying only on `curl` and standard Unix text processing utilities like `grep`, `sed`, `printf`, and `wc`.
+A plain Bash script using only `curl`, `grep`, `sed`, `printf`, and `wc`. No external tools, no Python, no Node.  
 
-### Features
-- Fetches the KINK FM "gedraaid" page using `curl`.
-- Extracts and formats song titles and artists.
-- Displays the last 25 songs (customizable) with colorful output.
-- **Continuous Mode:** Can run in a loop to keep the list updated.
-- **Customizable Output:** Options to disable colors, headers, footers, or enable quiet mode.
+### What it does  
+- Fetches the [gedraaid/kink](https://kink.nl/gedraaid/kink) page with `curl`  
+- Pulls out artist and song titles from the HTML  
+- Prints the last 25 tracks (adjustable) with colored, readable output  
+- Supports continuous polling (e.g., `--continuous --interval 60`)  
 
-### Dependencies
-- `bash` (standard on most Unix-like systems)
-- `curl` (usually pre-installed or easily installable)
-- Standard Unix utilities (`grep`, `sed`, `printf`, `wc`)
+### Dependencies  
+- `bash` (comes with macOS/Linux)  
+- `curl` (standard, or installable via `apt`, `brew`, etc.)  
+- `grep`, `sed`, `printf`, `wc` (all POSIX)  
 
-### Usage
+### Usage  
 
 ```bash
 ./kink-songs-bash.sh [OPTIONS]
 ```
 
-### Options
+### Options  
 
 | Option | Description |
 | :--- | :--- |
-| `-n, --number NUM` | Number of songs to display (default: 25) |
-| `-c, --no-colors` | Disable colored output |
-| `--no-header` | Disable header display |
-| `--no-footer` | Disable footer display |
-| `-q, --quiet` | Minimal output (header/footer/colors disabled) |
-| `--continuous` | Enable continuous mode with periodic refresh |
-| `--interval SEC` | Refresh interval in seconds (default: 30, requires --continuous) |
-| `-h, --help` | Show help message |
+| `-n, --number NUM` | Songs to show (default: 25) |
+| `-c, --no-colors` | Skip ANSI colors |
+| `--no-header` | Hide top box |
+| `--no-footer` | Hide bottom info box |
+| `-q, --quiet` | Minimal output (no colors, header, or footer) |
+| `--continuous` | Loop and refresh periodically |
+| `--interval SEC` | Seconds between refresh (default: 30, needs `--continuous`) |
+| `-h, --help` | Show this help |
 
-### Examples
+### Examples  
 
-**Display default (25) songs with colors:**
 ```bash
+# Default: 25 songs, colored
 ./kink-songs-bash.sh
-```
 
-**Display top 10 songs:**
-```bash
+# Top 10
 ./kink-songs-bash.sh -n 10
-```
 
-**Run continuously, refreshing every 60 seconds:**
-```bash
+# Auto-refresh every minute (good for a spare terminal pane)
 ./kink-songs-bash.sh --continuous --interval 60
-```
 
-**Minimal output (just the list):**
-```bash
+# Copy-paste friendly (no pretty boxes)
 ./kink-songs-bash.sh --quiet
 ```
 
-## Example Output
+### Example Output  
 
 ```
 ╔════════════════════════════════════════╗
