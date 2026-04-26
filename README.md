@@ -74,3 +74,7 @@ Found 25 recently played songs:
 ║ https://kink.nl/gedraaid/kink          ║
 ╚════════════════════════════════════════╝
 ```
+
+## More from Karelseaat
+
+For more projects and experiments, visit my GitHub Pages site: [karelseaat.github.io](https://karelseaat.github.io/)
